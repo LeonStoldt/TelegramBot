@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TelegramService extends TelegramBot {
 
-    private static final String TOKEN = "877330417:AAFuq3wdPE4byTA1EXTgo-N76rpZt7r81To";
+    private static final String TOKEN = "";
     private final Features features;
 
     @Autowired
