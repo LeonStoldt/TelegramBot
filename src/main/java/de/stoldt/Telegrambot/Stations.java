@@ -4,7 +4,7 @@ public enum Stations {
     HAMBURG_HBF("AH"), HBF("AH"),
     HAMBURG_DAMMTOR("ADF"), DAMMTOR("ADF"),
     HAMBURG_ALTONA("AA"), ALTONA("AA"),
-    PINNEBERG("AP"),
+    PINNEBERG("AP"), PB("AP"),
     PRISDORF("APD"),
     TORNESCH("ATM"),
     ELMSHORN("AEL"),
