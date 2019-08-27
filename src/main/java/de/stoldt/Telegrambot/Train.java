@@ -9,7 +9,8 @@ import java.util.Date;
 @Getter
 public class Train {
 
-    public static final int ONE_MINUTE_IN_MILLIS = 60000;
+    private static final int ONE_MINUTE_IN_MILLIS = 60000;
+    private static final int MAX_RAIL_NUMBER = 14;
     private Date time;
     private String trainLine;
     private Stations destination;
@@ -34,12 +35,19 @@ public class Train {
     public String toString() {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
         String normalizedDestination = destination.toString().substring(0, 1) + destination.toString().substring(1).toLowerCase().replace("_", " ");
-        String result = "\n*" + dateFormat.format(time) + "* - " + trainLine + " nach " + normalizedDestination + " (+" + forecastMin + "min)\n" +
-                "fährt von Gleis: " + rail;
-        if (forecastMin > 5) {
-            result = result.replace("+" + forecastMin + "min", "*+" + forecastMin + "min*");
-            Date newTime = new Date(time.getTime() + forecastMin * ONE_MINUTE_IN_MILLIS);
-            result = result + " | voraussichtlich " + dateFormat.format(newTime);
+        String result = "\n*" + dateFormat.format(time) + "* - " + trainLine + " nach " + normalizedDestination;
+        if (cancelled) {
+            result += (shuttleService)
+                    ? ("\n*ACHTUNG:* Zug fällt aus. Schienenersatzverkehr ist eingerichtet.")
+                    : ("\n*ACHTUNG:* Zug fällt aus. Es ist kein Schienenersatzverkehr eingerichtet.");
+        } else {
+            boolean delayed = forecastMin > 5;
+            result += (delayed)
+                    ? (" (*+" + forecastMin + "min*)\n")
+                    : (" (+" + forecastMin + "min)\n");
+            if (rail > MAX_RAIL_NUMBER) result += "fährt von Gleis: " + rail;
+            if (delayed)
+                result += " | voraussichtlich " + dateFormat.format(new Date(time.getTime() + forecastMin * ONE_MINUTE_IN_MILLIS));
         }
         return result + "\n";
     }

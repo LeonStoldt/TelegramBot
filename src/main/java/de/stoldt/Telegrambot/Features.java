@@ -25,19 +25,34 @@ public class Features {
                 "Solltest du deine Daten löschen lassen wollen, schreibe einfach '/delete' und ich lösche deine Daten.";
     }
 
+    public String getDeleteMessage() {
+        return "Deine Daten wurden erfolgreich gelöscht.";
+    }
+
+    public String getInformationMessage() {
+        return "Diese Daten habe ich über dich gespeichert:";
+    }
+
     public String getNordbahnMessage(String messageText) {
         String message = "Tut mir leid. Ich konnte den angegebenen Bahnhof leider nicht finden. Stelle sicher, dass er existiert und richtig geschrieben ist und versuche es erneut.";
         String[] words = messageText.split("\\s+");
         int position = 0;
-        for (int i = 0; i < words.length; i++) if (words[i].equals("nb")) position = i;
+        for (int i = 0; i < words.length; i++) {
+            if (words[i].equals("nb")) {
+                position = i;
+            }
+        }
         Stations destination;
 
         String searchString = "";
         int maxPosition = (position + 5 > words.length) ? words.length : position + 5;
         for (int j = position + 1; j < maxPosition; j++) {
             try {
-                if (!(j == position + 1)) searchString = searchString + "_" + words[j].toUpperCase();
-                else searchString = words[j].toUpperCase();
+                if (!(j == position + 1)) {
+                    searchString = searchString + "_" + words[j].toUpperCase();
+                } else {
+                    searchString = words[j].toUpperCase();
+                }
                 destination = Stations.valueOf(searchString);
                 message = getNordbahnInformation(destination);
             } catch (Exception e) {

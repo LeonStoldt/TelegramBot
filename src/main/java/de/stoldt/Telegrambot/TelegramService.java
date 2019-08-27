@@ -41,6 +41,10 @@ public class TelegramService extends TelegramBot {
                 message = features.getHelpMessage();
             } else if (messageText.contains("/stop")) {
                 message = features.getStopMessage();
+            } else if (messageText.contains("/delete")) {
+                message = features.getDeleteMessage();
+            } else if (messageText.contains("/info")) {
+                message = features.getInformationMessage();
             } else if (messageText.contains("nb ")) {
                 message = features.getNordbahnMessage(messageText);
             }
